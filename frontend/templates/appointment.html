@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Book a guidance counseling appointment at the SOC Guidance Office of Holy Angel University." />
+  <title>SOC Guidance Office – Appointment Request | Holy Angel University</title>
+  <link rel="stylesheet" href="/static/css/base.css" />
+  <link rel="stylesheet" href="/static/css/appointment.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Success Modal -->
+  <div id="successModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <div class="modal-icon">&#10003;</div>
+      <h2 id="modalTitle">Request Submitted!</h2>
+      <p>Your appointment request has been received. The Guidance Office will review your request and confirm the schedule based on counselor availability.</p>
+      <p class="modal-ref">Reference ID: <strong id="refId"></strong></p>
+      <button id="modalClose" class="btn-primary">Done</button>
+    </div>
+  </div>
+  <div class="page-wrapper">
+    <!-- LEFT PANEL -->
+    <aside class="left-panel">
+      <header class="panel-header">
+        <img src="/static/img/hau-logo.png" alt="Holy Angel University Seal" class="university-seal brand-logo" />
+        <div class="header-text">
+          <span class="office-name">SOC Guidance Office</span>
+          <span class="university-name">HOLY ANGEL UNIVERSITY</span>
+        </div>
+      </header>
+      <div class="panel-content">
+        <p class="label-tag">STUDENT APPOINTMENT</p>
+        <h1 class="panel-title">Book a Guidance Appointment</h1>
+        <p class="panel-description">
+          Select your preferred schedule and reason for appointment. The
+          Guidance Office will review your request and confirm availability.
+        </p>
+      </div>
+      <footer class="panel-footer">
+        <div class="footer-line"></div>
+        <p class="footer-text">Confidentiality and care are observed by the Guidance Office.</p>
+      </footer>
+      <!-- Decorative circles -->
+      <div class="circle-deco circle-1" aria-hidden="true"></div>
+      <div class="circle-deco circle-2" aria-hidden="true"></div>
+    </aside>
+    <!-- RIGHT PANEL -->
+    <main class="right-panel">
+      <div class="form-card">
+        <div class="form-header">
+          <h2 class="form-title">Appointment Request Form</h2>
+          <p class="form-subtitle">Please complete the details below.</p>
+        </div>
+        <form id="appointmentForm" novalidate>
+          <!-- Row 1: Full Name + Student ID -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="fullName">Full Name</label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                class="form-input"
+                placeholder="e.g. Juan Dela Cruz"
+                autocomplete="name"
+                aria-required="true"
+              />
+              <span class="error-msg" id="fullName-error"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="studentId">Student ID</label>
+              <input
+                type="text"
+                id="studentId"
+                name="studentId"
+                class="form-input"
+                placeholder="e.g. 20******"
+                aria-required="true"
+                maxlength="8"
+                inputmode="numeric"
+                pattern="\d{8}"
+              />
+              <span class="error-msg" id="studentId-error"></span>
+            </div>
+          </div>
+          <!-- Row 2: Email + Contact -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="email">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-input"
+                placeholder="student@hau.edu.ph"
+                autocomplete="email"
+                aria-required="true"
+              />
+              <span class="error-msg" id="email-error"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contact">Contact Number</label>
+              <input
+                type="tel"
+                id="contact"
+                name="contact"
+                class="form-input"
+                placeholder="09XX XXX XXXX"
+                autocomplete="tel"
+                aria-required="true"
+              />
+              <span class="error-msg" id="contact-error"></span>
+            </div>
+          </div>
+          <!-- Row 3: Preferred Date + Time -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="prefDate">Preferred Date</label>
+              <input
+                type="date"
+                id="prefDate"
+                name="prefDate"
+                class="form-input"
+                aria-required="true"
+              />
+              <span class="error-msg" id="prefDate-error"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prefTime">Preferred Time</label>
+              <input
+                type="time"
+                id="prefTime"
+                name="prefTime"
+                class="form-input"
+                aria-required="true"
+              />
+              <span class="error-msg" id="prefTime-error"></span>
+            </div>
+          </div>
+          <!-- Appointment Type -->
+          <div class="form-group full-width">
+            <label class="form-label" for="appointmentType">Appointment Type</label>
+            <select id="appointmentType" name="appointmentType" class="form-input form-select" aria-required="true">
+              <option value="" disabled selected>Select appointment type</option>
+              <option value="academic">Academic Counseling</option>
+              <option value="personal">Personal Counseling</option>
+              <option value="career">Career Counseling</option>
+              <option value="crisis">Crisis Intervention</option>
+              <option value="scholarship">Scholarship Concerns</option>
+              <option value="disciplinary">Disciplinary Matters</option>
+              <option value="other">Other</option>
+            </select>
+            <span class="error-msg" id="appointmentType-error"></span>
+          </div>
+          <!-- Reason -->
+          <div class="form-group full-width">
+            <label class="form-label" for="reason">Reason for Appointment</label>
+            <textarea
+              id="reason"
+              name="reason"
+              class="form-input form-textarea"
+              placeholder="Briefly describe your concern or reason for booking..."
+              rows="4"
+              aria-required="true"
+            ></textarea>
+            <span class="error-msg" id="reason-error"></span>
+          </div>
+          <!-- Reminder Banner -->
+          <div class="reminder-banner" role="note">
+            <span class="reminder-dot"></span>
+            <p>
+              <strong>Reminder:</strong> This form submits a request only. Final schedule will depend on counselor availability.
+            </p>
+          </div>
+          <!-- Buttons -->
+          <div class="form-actions">
+            <button type="button" id="backBtn" class="btn-secondary">Back to Chatbot</button>
+            <button type="submit" id="submitBtn" class="btn-primary">Submit Request</button>
+            <button type="button" id="clearBtn" class="btn-secondary">Clear Form</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+  <script src="/static/js/appointment.js"></script>
+</body>
+</html>

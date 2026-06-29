@@ -1,0 +1,118 @@
+/* ─────────────────────────────────────────
+   base.css — Shared variables, reset, and
+   utility classes used across ALL pages
+   (chatbot.html, dashboard.html, login.html)
+───────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+
+/* ── RESET ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── HAU BRAND VARIABLES ── */
+:root {
+  --maroon:        #7B1113;
+  --maroon-dark:   #5A0C0E;
+  --maroon-light:  #9E1B1D;
+  --gold:          #C9A84C;
+  --gold-light:    #E8C97A;
+  --gold-pale:     #FDF6E3;
+  --white:         #FFFFFF;
+  --gray-50:       #F9F9F9;
+  --gray-100:      #F0EDED;
+  --gray-200:      #DDD8D8;
+  --gray-400:      #9E9393;
+  --gray-700:      #4A4040;
+  --gray-900:      #1E1818;
+
+  --success-bg:    #F0FDF4;
+  --success-text:  #166534;
+  --success-border:#BBF7D0;
+
+  --danger-bg:     #FEE2E2;
+  --danger-text:   #B91C1C;
+  --danger-border: #FECACA;
+
+  --warning-bg:    #FFF7ED;
+  --warning-text:  #92400E;
+  --warning-border:#FED7AA;
+
+  --radius-lg:     16px;
+  --radius-md:     10px;
+  --radius-sm:     6px;
+  --shadow-md:     0 4px 24px rgba(123,17,19,0.10);
+  --shadow-sm:     0 2px 8px rgba(0,0,0,0.07);
+}
+
+/* ── BASE ── */
+html, body {
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-900);
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── UTILITY CLASSES ── */
+.text-maroon { color: var(--maroon); }
+.text-gray   { color: var(--gray-400); }
+.font-serif  { font-family: 'Playfair Display', serif; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+.badge.negative { background: var(--danger-bg);  color: var(--danger-text);  border: 1px solid var(--danger-border); }
+.badge.neutral  { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
+.badge.pending  { background: var(--warning-bg); color: var(--warning-text); border: 1px solid var(--warning-border); }
+
+.btn {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: 99px;
+  padding: 8px 18px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.btn-primary {
+  background: var(--maroon);
+  color: var(--white);
+}
+.btn-primary:hover { background: var(--maroon-dark); }
+.btn-outline {
+  background: var(--white);
+  color: var(--maroon);
+  border: 1.5px solid var(--gold);
+}
+.btn-outline:hover { background: var(--maroon); color: var(--white); }
+
+/* ── SCROLLBAR ── */
+.scrollable::-webkit-scrollbar { width: 4px; }
+.scrollable::-webkit-scrollbar-track { background: transparent; }
+.scrollable::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 4px; }
+
+/* ── LOGO / BRAND IMAGES ── */
+.logo-img, .sidebar-logo-img, .hau-logo, .brand-logo {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+.sidebar-logo-img { width: 38px; height: 38px; border-radius: 50%; }
+.logo-small { width: 32px; height: 32px; }
+
+/* Logout placement */
+.logout-inline { margin-left: 12px; }
