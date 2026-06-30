@@ -58,7 +58,7 @@ def chat():
         return jsonify({"error": "Message is required."}), 400
 
     service = get_chatbot_service()
-    result = service.respond(message)
+    result = service.respond(message, conversation=payload.get("conversation", []))
 
     inquiry_id = save_inquiry(
         {

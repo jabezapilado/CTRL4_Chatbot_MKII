@@ -1,6 +1,6 @@
 # SOC Guidance Office Chatbot — Frontend
 Holy Angel University | School of Computing
-AI-Powered Chatbot for Inquiry Management Using NLP-Based Negative Emotion Detection
+Development of an AI-Powered Chatbot for Inquiry Management Using NLP-Based Negative Emotion Detection
 
 ## Current State
 
@@ -9,14 +9,12 @@ AI-Powered Chatbot for Inquiry Management Using NLP-Based Negative Emotion Detec
 - `dashboard.js` consumes backend inquiry, appointment, settings, and account endpoints.
 - `chat.js` sends messages to the live `/chat` route.
 - `chat_admin.js` still keeps some takeover/session state in the browser for now.
+- Chat responses are now grounded by the backend multilingual RAG service.
+- The backend also runs NLP-based negative emotion detection and may escalate counselor support immediately.
 
 ## Prototype Login
 
-Use these seeded local accounts when testing the login page:
-
-- `student@hau.edu.ph` / `student123`
-- `staff@hau.edu.ph` / `staff123`
-- `admin@hau.edu.ph` / `admin123`
+Use school-issued accounts, or configure local seed accounts through backend `.env` values.
 
 ## Tech Stack
 
@@ -25,35 +23,31 @@ Use these seeded local accounts when testing the login page:
 - Vanilla JavaScript
 - Flask backend serving the templates and static assets
 
-## Folder Structure
+## Project Structure
 
-```
+```text
 frontend/
-│
-├── templates/
-│   ├── appointment.html   ← Student appointment booking page
-│   ├── chatbot.html       ← Student-facing chat interface
-│   ├── chatbot_admin.html ← Admin helper/chat takeover page
-│   ├── dashboard.html     ← Staff/Admin inquiry dashboard
-│   └── login.html         ← Login page for staff and students
-│
-├── static/
-│   ├── css/
-│   │   ├── appointment.css ← Styles for appointment.html
-│   │   ├── base.css        ← Shared variables, reset, badges, buttons
-│   │   ├── chatbot.css     ← Styles for chatbot.html
-│   │   ├── dashboard.css   ← Styles for dashboard.html
-│   │   └── login.css       ← Styles for login.html
-│   │
-│   ├── img/
-│   └── js/
-│       ├── appointment.js ← Appointment form and modal interactions
-│       ├── auth.js        ← Login page behavior and logout support
-│       ├── chat.js        ← Student chat logic
-│       ├── chat_admin.js  ← Admin takeover helper logic
-│       └── dashboard.js   ← Backend-driven dashboard logic
-│
-└── README.md
+├─ README.md
+├─ templates/
+│  ├─ appointment.html
+│  ├─ chatbot.html
+│  ├─ chatbot_admin.html
+│  ├─ dashboard.html
+│  └─ login.html
+└─ static/
+	├─ css/
+	│  ├─ appointment.css
+	│  ├─ base.css
+	│  ├─ chatbot.css
+	│  ├─ dashboard.css
+	│  └─ login.css
+	├─ img/
+	└─ js/
+		├─ appointment.js
+		├─ auth.js
+		├─ chat.js
+		├─ chat_admin.js
+		└─ dashboard.js
 ```
 
 ## Page Overview
@@ -77,7 +71,7 @@ frontend/
 - Mobile-responsive collapsible sidebar
 
 ### 4. `login.html` - Login Page
-- Role-aware login for student, staff, and admin accounts
+- Account-based login for student, staff, and admin accounts
 - Email and password fields with validation states
 - Backend login call to `/auth/login`
 
@@ -101,6 +95,12 @@ python app.py
 - Authentication goes to `/auth/login`.
 - Dashboard data comes from `/api/inquiries`, `/api/escalations`, `/api/appointments`, `/api/accounts`, and `/api/settings`.
 - The backend returns JSON responses that the frontend renders directly.
+
+## AI Integration Note
+
+- The frontend does not read from the top-level `ai/` folder.
+- The active chatbot behavior comes from backend RAG components (`backend/server/service.py`, `backend/knowledge_base/`, and `backend/data/rag_index/`).
+- The top-level `ai/` folder is retained as legacy archive only.
 
 ## Color Theme
 | Name | Hex | Use |

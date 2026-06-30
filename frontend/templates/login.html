@@ -27,11 +27,6 @@
       <h2>Welcome back</h2>
       <p class="login-sub">Sign in to continue to the Guidance Chatbot</p>
 
-      <div class="role-toggle" role="group" aria-label="Select account type">
-        <button class="role-btn active" id="role-student" type="button" onclick="setRole('student')">Student</button>
-        <button class="role-btn" id="role-staff" type="button" onclick="setRole('staff')">Staff</button>
-      </div>
-
       <div class="alert-error" id="login-error">
         ⚠ Incorrect email or password. Please try again.
       </div>
@@ -73,12 +68,10 @@
       </form>
 
       <div class="login-footer">
-        <div class="divider login-footer-divider">Demo Credentials</div>
+        <div class="divider login-footer-divider">School Accounts</div>
 
         <div class="demo-credentials">
-          <strong>Student:</strong> student@hau.edu.ph / student123<br>
-          <strong>Staff:</strong> staff@hau.edu.ph / staff123<br>
-          <strong>Admin:</strong> admin@hau.edu.ph / admin123
+          Use your school-issued email and password.
         </div>
 
         <p class="login-note">
@@ -93,23 +86,10 @@
 </div>
 
 <script>
-let currentRole = "student";
-const API_BASE = "http://127.0.0.1:5000";
+const API_BASE = window.location.origin;
 
 function redirectToPage(path) {
   window.location.replace(path);
-}
-
-function setRole(role) {
-  currentRole = role;
-
-  document.getElementById("role-student").classList.toggle("active", role === "student");
-  document.getElementById("role-staff").classList.toggle("active", role === "staff");
-
-  document.getElementById("email").placeholder =
-    role === "student"
-      ? "e.g. student@hau.edu.ph"
-      : "e.g. staff@hau.edu.ph";
 }
 
 function togglePassword() {

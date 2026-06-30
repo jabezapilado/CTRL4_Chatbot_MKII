@@ -212,12 +212,18 @@ form.addEventListener('submit', async (e) => {
 
   try {
 
-    const response = await fetch('http://127.0.0.1:5000/appointments', {
+    const response = await fetch(`${window.location.origin}/api/appointments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({
+        student_name: payload.fullName,
+        student_email: payload.email,
+        preferred_date: payload.preferredDate,
+        preferred_time: payload.preferredTime,
+        reason: payload.reason,
+      })
     });
 
     if (!response.ok) {

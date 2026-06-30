@@ -18,7 +18,7 @@ const chatArea  = document.getElementById('chat-area');
 
 const input     = document.getElementById('msg-input');
 const qrBar     = document.getElementById('quick-replies');
-const API_BASE  = 'http://127.0.0.1:5000';
+const API_BASE  = window.location.origin;
 
 // Escalation / takeover state
 let currentEscalationId = sessionStorage.getItem('current_escalation') || null;

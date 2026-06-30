@@ -1,15 +1,36 @@
 # Backend
 
+Project Title: Development of an AI-Powered Chatbot for Inquiry Management Using NLP-Based Negative Emotion Detection
+
 This folder contains the local Python backend for the chatbot.
 
-## Structure
+## Project Structure
 
-- `app.py` - entrypoint for local development
-- `server/` - Flask package with app factory, blueprints, model service, and MySQL storage
-- `scripts/setup_database.py` - seeds the database and default accounts
-- `sql/schema.sql` - optional starter schema for XAMPP/phpMyAdmin
-- `.env.example` - local database settings for XAMPP
-- `.venv/` - project-local virtual environment created by `setup.sh`
+```text
+backend/
+├─ README.md
+├─ app.py
+├─ requirements.txt
+├─ setup.sh
+├─ .env.example
+├─ knowledge_base/
+│  └─ hau_guidance_counseling_official.md
+├─ data/rag_index/
+│  ├─ knowledge.faiss
+│  └─ metadata.json
+├─ scripts/
+│  ├─ ingest_guidance_docs.py
+│  └─ setup_database.py
+├─ sql/
+│  └─ schema.sql
+└─ server/
+	├─ __init__.py
+	├─ auth.py
+	├─ config.py
+	├─ db.py
+	├─ routes.py
+	└─ service.py
+```
 
 ## What it provides
 
@@ -17,17 +38,16 @@ This folder contains the local Python backend for the chatbot.
 - Role-based login at `/auth/login`
 - MySQL/MariaDB persistence that works with XAMPP
 - Admin/staff endpoints for inquiries, escalations, appointments, accounts, and settings
-- Local AI service that loads the existing GoEmotions training data
+- Multilingual RAG chatbot service grounded to local approved documents
+- NLP-based negative emotion detection for escalation to counselor support
+- Safety guardrails for crisis escalation and diagnosis refusal
 
 ## Prototype Login
 
-The first prototype uses seeded local accounts for testing:
+The first prototype can seed local accounts using environment variables in `backend/.env`.
+Set `CHATBOT_SEED_*_PASSWORD` values before running setup if you want automatic seed accounts.
 
-- `student@hau.edu.ph` with password `student123`
-- `staff@hau.edu.ph` with password `staff123`
-- `admin@hau.edu.ph` with password `admin123`
-
-The login endpoint compares the submitted password directly against the stored prototype value.
+The login endpoint supports hashed credentials and also accepts legacy plaintext prototype values.
 
 ## Run locally
 
@@ -42,6 +62,13 @@ bash setup.sh
 
 4. Start the app with `python app.py` from this folder.
 5. Test `GET /health` and `POST /chat`.
+6. Rebuild RAG index whenever knowledge base content changes.
+
+```bash
+cd backend
+source .venv/bin/activate
+python scripts/ingest_guidance_docs.py
+```
 
 If you want to run the setup steps manually instead of using the script:
 
@@ -61,3 +88,12 @@ python scripts/setup_database.py
 - The bootstrap script installs dependencies, creates the virtual environment if needed, and seeds the database.
 - The frontend is already wired to the backend endpoints in this workspace.
 - The backend reads `.env` with `python-dotenv`, so run it from the project-local virtual environment.
+- RAG behavior is configured through `CHATBOT_RAG_*` values in `.env`.
+- Emotion escalation behavior is configured through `CHATBOT_EMOTION_ESCALATION_*` values in `.env`.
+
+## Legacy AI Archive
+
+The top-level `../ai/` folder is retained only as historical prototype archive.
+
+- It is not used by current backend runtime.
+- Active chatbot behavior is defined in `server/service.py` and documents under `knowledge_base/`.

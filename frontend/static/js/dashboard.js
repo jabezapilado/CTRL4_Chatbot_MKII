@@ -6,7 +6,7 @@ if (window.requireAuth) {
   window.location.replace(window.getLoginUrl ? window.getLoginUrl() : '/login');
 }
 
-const API_BASE = 'http://127.0.0.1:5000';
+const API_BASE = window.location.origin;
 
 let sampleInquiries = [];
 

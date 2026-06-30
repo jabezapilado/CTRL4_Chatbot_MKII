@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime
+from datetime import date, datetime, time, timedelta
 from typing import Any
 
 import mysql.connector
+from werkzeug.security import generate_password_hash
 
 from .config import Config
 
@@ -44,6 +45,71 @@ def _database_connection():
 
 def utc_now() -> datetime:
     return datetime.utcnow().replace(microsecond=0)
+
+
+def _json_safe_value(value: Any) -> Any:
+    if isinstance(value, datetime):
+        return value.isoformat()
+    if isinstance(value, date):
+        return value.isoformat()
+    if isinstance(value, time):
+        return value.isoformat()
+    if isinstance(value, timedelta):
+        total_seconds = int(value.total_seconds())
+        hours, remainder = divmod(total_seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+    return value
+
+
+def _json_safe_row(row: dict[str, Any]) -> dict[str, Any]:
+    return {key: _json_safe_value(value) for key, value in row.items()}
+
+
+def _seed_accounts() -> list[tuple[str, str, str, str, str, datetime]]:
+    accounts = [
+        {
+            "email": config.SEED_STUDENT_EMAIL,
+            "full_name": config.SEED_STUDENT_NAME,
+            "password": config.SEED_STUDENT_PASSWORD,
+            "role": "student",
+        },
+        {
+            "email": config.SEED_STAFF_EMAIL,
+            "full_name": config.SEED_STAFF_NAME,
+            "password": config.SEED_STAFF_PASSWORD,
+            "role": "staff",
+        },
+        {
+            "email": config.SEED_ADMIN_EMAIL,
+            "full_name": config.SEED_ADMIN_NAME,
+            "password": config.SEED_ADMIN_PASSWORD,
+            "role": "admin",
+        },
+    ]
+
+    rows: list[tuple[str, str, str, str, str, datetime]] = []
+    for account in accounts:
+        email = str(account["email"]).strip().lower()
+        password = str(account["password"])
+        full_name = str(account["full_name"]).strip()
+        role = str(account["role"]).strip().lower()
+
+        if not email or not password or not full_name:
+            continue
+
+        rows.append(
+            (
+                email,
+                generate_password_hash(password),
+                full_name,
+                role,
+                "active",
+                utc_now(),
+            )
+        )
+
+    return rows
 
 
 def initialize_database() -> None:
@@ -131,15 +197,15 @@ def initialize_database() -> None:
                 """
             )
 
-            cursor.execute(
-                """
-                INSERT IGNORE INTO accounts (email, password_hash, full_name, role, status, created_at)
-                VALUES
-                    ('student@hau.edu.ph', 'student123', 'Maria Santos', 'student', 'active', UTC_TIMESTAMP()),
-                    ('staff@hau.edu.ph', 'staff123', 'Ms. Reyes', 'staff', 'active', UTC_TIMESTAMP()),
-                    ('admin@hau.edu.ph', 'admin123', 'System Admin', 'admin', 'active', UTC_TIMESTAMP())
-                """
-            )
+            seed_rows = _seed_accounts()
+            if seed_rows:
+                cursor.executemany(
+                    """
+                    INSERT IGNORE INTO accounts (email, password_hash, full_name, role, status, created_at)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                    """,
+                    seed_rows,
+                )
         connection.commit()
 
 
@@ -353,7 +419,7 @@ def fetch_rows(query: str, params: tuple[Any, ...] = ()) -> list[dict[str, Any]]
         with connection.cursor(dictionary=True) as cursor:
             cursor.execute(query, params)
             rows = cursor.fetchall()
-    return rows
+    return [_json_safe_row(row) for row in rows]
 
 
 def update_inquiry_status(inquiry_id: int, status: str, staff_notes: str | None = None) -> None:

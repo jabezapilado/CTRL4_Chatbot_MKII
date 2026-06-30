@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from flask import Blueprint, jsonify, request
+from werkzeug.security import check_password_hash
 
 from .db import fetch_account_by_email
 
@@ -24,7 +25,16 @@ def login():
     if account["status"] != "active":
         return jsonify({"error": "Account is disabled."}), 403
 
-    if password != account["password_hash"]:
+    stored_password = str(account.get("password_hash", ""))
+    password_ok = False
+
+    # Support modern hashed credentials and legacy plaintext seeds.
+    if stored_password.startswith(("pbkdf2:", "scrypt:")):
+        password_ok = check_password_hash(stored_password, password)
+    else:
+        password_ok = password == stored_password
+
+    if not password_ok:
         return jsonify({"error": "Invalid credentials."}), 401
 
     return jsonify(

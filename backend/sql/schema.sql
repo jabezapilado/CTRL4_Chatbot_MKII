@@ -54,8 +54,4 @@ CREATE TABLE IF NOT EXISTS settings (
     updated_at DATETIME NOT NULL
 );
 
-INSERT IGNORE INTO accounts (email, password_hash, full_name, role, status, created_at)
-VALUES
-    ('student@hau.edu.ph', 'student123', 'Maria Santos', 'student', 'active', UTC_TIMESTAMP()),
-    ('staff@hau.edu.ph', 'staff123', 'Ms. Reyes', 'staff', 'active', UTC_TIMESTAMP()),
-    ('admin@hau.edu.ph', 'admin123', 'System Admin', 'admin', 'active', UTC_TIMESTAMP());
+-- Insert accounts manually with hashed passwords, or use backend/.env seeding variables with scripts/setup_database.py.
