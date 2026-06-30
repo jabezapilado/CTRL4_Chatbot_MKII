@@ -27,6 +27,14 @@
       <h2>Welcome back</h2>
       <p class="login-sub">Sign in to continue to the Guidance Chatbot</p>
 
+      <div class="login-notice" id="login-notice" aria-live="polite" hidden>
+        <span class="login-notice-icon">i</span>
+        <div>
+          <strong id="login-notice-title">Session required</strong>
+          <p id="login-notice-text">Please sign in to continue.</p>
+        </div>
+      </div>
+
       <div class="alert-error" id="login-error">
         ⚠ Incorrect email or password. Please try again.
       </div>
@@ -150,6 +158,30 @@ function handleLogin(e) {
   });
 }
 
+function showLoginNotice() {
+  const notice = document.getElementById('login-notice');
+  const title = document.getElementById('login-notice-title');
+  const text = document.getElementById('login-notice-text');
+
+  const params = new URLSearchParams(window.location.search);
+  const reason = params.get('reason');
+
+  if (!reason) return;
+
+  if (reason === 'session-required') {
+    title.textContent = 'Protected access';
+    text.textContent = 'Sign in to continue to the chatbot, dashboard, or appointment pages.';
+  } else if (reason === 'logged-out') {
+    title.textContent = 'Signed out';
+    text.textContent = 'Please sign in again to continue protected access.';
+  } else {
+    title.textContent = 'Protected access';
+    text.textContent = 'Your account is required to continue.';
+  }
+
+  notice.hidden = false;
+}
+
 // Already logged in
 const session = sessionStorage.getItem("hau_user");
 
@@ -162,6 +194,8 @@ if (session) {
     redirectToPage("/chatbot");
   }
 }
+
+showLoginNotice();
 </script>
 
 </body>

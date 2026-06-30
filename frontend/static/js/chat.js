@@ -10,10 +10,6 @@
 ───────────────────────────────────────── */
 
 // ── DOM References ──
-// Redirect to login if no session (simple client-side guard)
-if (!sessionStorage.getItem('hau_user')) {
-  window.location.replace("/login");
-}
 const chatArea  = document.getElementById('chat-area');
 
 const input     = document.getElementById('msg-input');
@@ -90,6 +86,16 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;');
 }
 
+function linkifyUrls(text) {
+  if (!text) return '';
+
+  return String(text).replace(/https?:\/\/[^\s<]+/g, (rawUrl) => {
+    const trimmed = rawUrl.replace(/[),.;!?]+$/, '');
+    const trailing = rawUrl.slice(trimmed.length);
+    return `<a href="${trimmed}" target="_blank" rel="noopener noreferrer">${trimmed}</a>${trailing}`;
+  });
+}
+
 // ─────────────────────────────
 // APPEND MESSAGES
 // ─────────────────────────────
@@ -109,6 +115,7 @@ function appendUserMessage(text) {
 function appendBotMessage(htmlContent, emotionLabel) {
   const row = document.createElement('div');
   row.className = 'msg-row bot';
+  const formattedContent = linkifyUrls(htmlContent);
 
   let badge = '';
   if (emotionLabel === 'negative') {
@@ -120,7 +127,7 @@ function appendBotMessage(htmlContent, emotionLabel) {
   row.innerHTML = `
     <div class="avatar">G</div>
     <div class="bubble-wrap">
-      <div class="bubble">${htmlContent}${badge ? '<br>' + badge : ''}</div>
+      <div class="bubble">${formattedContent}${badge ? '<br>' + badge : ''}</div>
       <span class="bubble-time">${getTime()}</span>
     </div>`;
   chatArea.appendChild(row);

@@ -22,6 +22,8 @@ class Config:
         self.DB_SSL_CA = os.getenv("CHATBOT_DB_SSL_CA", "")
         self.DB_SSL_VERIFY_CERT = os.getenv("CHATBOT_DB_SSL_VERIFY_CERT", "false").lower() == "true"
         self.DEBUG = os.getenv("CHATBOT_DEBUG", "true").lower() == "true"
+        self.SECRET_KEY = os.getenv("CHATBOT_SECRET_KEY", "dev-secret-key-change-me")
+        self.PORT = int(os.getenv("CHATBOT_PORT", "5001"))
 
         self.SEED_STUDENT_EMAIL = os.getenv("CHATBOT_SEED_STUDENT_EMAIL", "student@hau.edu.ph")
         self.SEED_STUDENT_NAME = os.getenv("CHATBOT_SEED_STUDENT_NAME", "Maria Santos")

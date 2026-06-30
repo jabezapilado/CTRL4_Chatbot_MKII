@@ -3,11 +3,9 @@
    script.js
    ========================================================= */
 'use strict';
-// Redirect to login if not authenticated
+// The server already protects this route; keep the page usable if sessionStorage
+// is empty after a restart.
 const user = window.requireAuth ? window.requireAuth() : null;
-if (!user) {
-  throw new Error("User not authenticated.");
-}
 // ── DOM References ──────────────────────────────────────────────────────────
 const form         = document.getElementById('appointmentForm');
 const submitBtn    = document.getElementById('submitBtn');
@@ -206,8 +204,8 @@ form.addEventListener('submit', async (e) => {
   const payload = {
     ...collectFormData(),
     referenceId,
-    userEmail: user.email,
-    userName: user.name
+    userEmail: user?.email || '',
+    userName: user?.name || ''
   };
 
   try {

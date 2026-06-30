@@ -6,6 +6,7 @@
 - Flask backend serves chat, authentication, dashboard APIs, and MySQL persistence.
 - Current AI stack is multilingual RAG (retrieval-augmented generation) with strict grounding to approved guidance content.
 - Role-based routing is active: `student` to chatbot, `staff` and `admin` to dashboard.
+- The final project version is intended for deployment as a website with a cloud database.
 
 ## Current AI Architecture
 
@@ -35,11 +36,15 @@ The `ai/` folder is preserved as a **legacy archive** from the earlier prototype
 
 ## Quick Start
 
-1. Start MySQL in XAMPP.
-2. Configure backend environment values in `backend/.env`.
-3. Setup backend environment and dependencies.
-4. Build or refresh the RAG index.
-5. Run Flask app.
+### First-time setup
+
+1. Open XAMPP and start MySQL.
+2. Go to the [backend](backend) folder.
+3. Create the virtual environment and install the dependencies.
+4. Copy `.env.example` to `.env`.
+5. Initialize the database and seed the default accounts.
+6. Build the RAG index from the official guidance files.
+7. Start the Flask app.
 
 ```bash
 cd backend
@@ -51,6 +56,22 @@ python scripts/setup_database.py
 python scripts/ingest_guidance_docs.py
 python app.py
 ```
+
+### Daily run
+
+If the backend is already set up, you only need:
+
+```bash
+cd backend
+source .venv/bin/activate
+python app.py
+```
+
+### Helpful pages
+
+- `http://localhost:5000/` or `http://localhost:5000/login`
+- `http://localhost:5000/chatbot`
+- `http://localhost:5000/dashboard`
 
 ## Key Endpoints
 

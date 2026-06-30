@@ -1,7 +1,6 @@
 /* chat_admin.js — Admin takeover chat page */
 
 if (!sessionStorage.getItem('hau_user')) {
-  window.location.replace(window.getLoginUrl ? window.getLoginUrl() : 'login.html');
 }
 
 const adminChatArea = document.getElementById('admin-chat-area');

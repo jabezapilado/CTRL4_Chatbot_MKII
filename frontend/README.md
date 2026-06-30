@@ -77,9 +77,9 @@ frontend/
 
 ## How to Run
 
-1. Open the project's backend folder.
-2. Activate the project-local virtual environment.
-3. Start the Flask backend.
+1. Make sure the backend is already set up and running.
+2. Open the Flask app in your browser.
+3. Use the pages below depending on what you want to test.
 
 ```bash
 cd backend
@@ -87,7 +87,13 @@ source .venv/bin/activate
 python app.py
 ```
 
-4. Open the frontend through the Flask app so templates and static files load correctly.
+The frontend is served by Flask, so you do not open the HTML files directly.
+
+Useful pages:
+
+- `/` or `/login` for login
+- `/chatbot` for student chat
+- `/dashboard` for staff/admin view
 
 ## Backend Contract
 

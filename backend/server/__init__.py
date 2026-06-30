@@ -57,6 +57,7 @@ def create_app() -> Flask:
     )
 
     app.config.from_object(Config())
+    app.secret_key = app.config.get("SECRET_KEY")
     CORS(app)
 
     app.register_blueprint(auth_bp)

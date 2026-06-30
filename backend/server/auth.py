@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, session
 from werkzeug.security import check_password_hash
 
 from .db import fetch_account_by_email
@@ -37,6 +37,13 @@ def login():
     if not password_ok:
         return jsonify({"error": "Invalid credentials."}), 401
 
+    session["hau_user"] = {
+        "id": account["id"],
+        "email": account["email"],
+        "full_name": account["full_name"],
+        "role": account["role"],
+    }
+
     return jsonify(
         {
             "id": account["id"],
@@ -45,3 +52,9 @@ def login():
             "role": account["role"],
         }
     ), 200
+
+
+@auth_bp.post("/auth/logout")
+def logout():
+    session.clear()
+    return jsonify({"status": "logged_out"}), 200

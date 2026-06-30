@@ -2,8 +2,6 @@
 
 if (window.requireAuth) {
   window.requireAuth();
-} else if (!sessionStorage.getItem('hau_user')) {
-  window.location.replace(window.getLoginUrl ? window.getLoginUrl() : '/login');
 }
 
 const API_BASE = window.location.origin;
@@ -810,11 +808,15 @@ document.getElementById('clear-entry-btn')?.addEventListener('click', () => {
 });
 
 function logout() {
-  sessionStorage.removeItem('hau_user');
-  createToast('Logged out.', 'info');
-  if (window.getLoginUrl) {
-    setTimeout(() => window.location.replace(window.getLoginUrl()), 700);
-  }
+  fetch(`${API_BASE}/auth/logout`, { method: 'POST' })
+    .catch(() => {})
+    .finally(() => {
+      sessionStorage.removeItem('hau_user');
+      createToast('Logged out.', 'info');
+      if (window.getLoginUrl) {
+        setTimeout(() => window.location.replace(window.getLoginUrl()), 700);
+      }
+    });
 }
 
 bindSettingsInteractions();

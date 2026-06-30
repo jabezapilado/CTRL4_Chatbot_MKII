@@ -3,13 +3,50 @@ from __future__ import annotations
 import json
 
 # from flask import Blueprint, jsonify, request
-from flask import Blueprint, jsonify, request, render_template
+from flask import Blueprint, jsonify, request, render_template, redirect, session
 
 from .db import fetch_rows, list_accounts, load_settings, save_appointment, save_escalation, save_inquiry, save_inquiry_manual, save_settings, update_appointment_status, update_inquiry_staff_notes, update_inquiry_status, utc_now
 from .service import get_chatbot_service
 
 
 api_bp = Blueprint("api", __name__)
+
+
+def _get_logged_in_user():
+    user = session.get("hau_user")
+    return user if isinstance(user, dict) and user.get("email") else None
+
+
+def _role_landing_path(user: dict) -> str:
+    role = str(user.get("role", "student")).lower()
+    if role in {"staff", "admin"}:
+        return "/dashboard"
+    return "/chatbot"
+
+
+@api_bp.before_request
+def require_login_for_private_routes():
+    public_paths = {"/", "/login", "/health", "/auth/login", "/auth/logout"}
+    path = request.path
+
+    if path.startswith("/static/") or path in public_paths:
+        if path in {"/", "/login"} and _get_logged_in_user():
+            return redirect(_role_landing_path(_get_logged_in_user()))
+        return None
+
+    user = _get_logged_in_user()
+    if not user:
+        if path.startswith("/api/") or path == "/chat":
+            return jsonify({"error": "Login required."}), 401
+        return redirect("/login?reason=session-required")
+
+    role = str(user.get("role", "student")).lower()
+    if path in {"/chatbot", "/appointment"} and role in {"staff", "admin"}:
+        return redirect("/dashboard")
+    if path in {"/dashboard", "/chatbot_admin"} and role == "student":
+        return redirect("/chatbot")
+
+    return None
 
 #==========================================
 #Frontend routes

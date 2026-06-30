@@ -4,6 +4,8 @@ Project Title: Development of an AI-Powered Chatbot for Inquiry Management Using
 
 This folder contains the local Python backend for the chatbot.
 
+Note: the instructions here are for local development. The final version will be deployed as a website and connected to a cloud database.
+
 ## Project Structure
 
 ```text
@@ -51,26 +53,15 @@ The login endpoint supports hashed credentials and also accepts legacy plaintext
 
 ## Run locally
 
+### First-time setup
+
 1. Start MySQL in XAMPP.
-2. Make sure the database settings in `.env` match your local XAMPP configuration.
-3. Run the bootstrap script from this folder.
-
-```bash
-cd backend
-bash setup.sh
-```
-
-4. Start the app with `python app.py` from this folder.
-5. Test `GET /health` and `POST /chat`.
-6. Rebuild RAG index whenever knowledge base content changes.
-
-```bash
-cd backend
-source .venv/bin/activate
-python scripts/ingest_guidance_docs.py
-```
-
-If you want to run the setup steps manually instead of using the script:
+2. Open a terminal in the [backend](.) folder.
+3. Create the virtual environment and install the requirements.
+4. Copy `.env.example` to `.env` and check your database settings.
+5. Create the database and seed the default accounts.
+6. Build the RAG index from the files in `knowledge_base/`.
+7. Start the Flask app.
 
 ```bash
 cd backend
@@ -79,6 +70,26 @@ source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
 python scripts/setup_database.py
+python scripts/ingest_guidance_docs.py
+python app.py
+```
+
+### Daily run
+
+If everything is already set up, use only:
+
+```bash
+cd backend
+source .venv/bin/activate
+python app.py
+```
+
+### Rebuild the RAG index after updating knowledge files
+
+```bash
+cd backend
+source .venv/bin/activate
+python scripts/ingest_guidance_docs.py
 ```
 
 ## Notes
@@ -90,6 +101,7 @@ python scripts/setup_database.py
 - The backend reads `.env` with `python-dotenv`, so run it from the project-local virtual environment.
 - RAG behavior is configured through `CHATBOT_RAG_*` values in `.env`.
 - Emotion escalation behavior is configured through `CHATBOT_EMOTION_ESCALATION_*` values in `.env`.
+- Authentication now uses a Flask session cookie, so `CHATBOT_SECRET_KEY` must be set for production deployment.
 
 ## Legacy AI Archive
 
