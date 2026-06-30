@@ -121,4 +121,4 @@ CTRL4_Chatbot/
 
 ## License
 
-Educational use.
+This project is released for educational use. Apply additional licensing as needed before redistribution.
