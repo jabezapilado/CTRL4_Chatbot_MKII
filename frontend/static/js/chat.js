@@ -166,12 +166,6 @@ function removeTypingIndicator() {
   if (el) el.remove();
 }
 
-// ─────────────────────────────
-// RULE-BASED RESPONSE ENGINE
-// (Placeholder — replace with
-//  Flask API call in Week 2)
-// ─────────────────────────────
-
 const rules = [
   {
     pattern: /office hour|open|schedule|when|time/i,
@@ -346,6 +340,72 @@ function appendStaffMessage(text) {
     </div>`;
   chatArea.appendChild(row);
   scrollToBottom();
+}
+
+function exportConversation() {
+
+    const conversation = serializeChat();
+
+    const now = new Date();
+
+    let output = "";
+
+    output += "=====================================================\n";
+    output += "CTRL4 AI GUIDANCE ASSISTANT\n";
+    output += "Conversation Export\n";
+    output += "=====================================================\n\n";
+
+    output += `Date: ${now.toLocaleString()}\n`;
+    output += `Messages: ${conversation.length}\n`;
+    output += `Escalated: ${isEscalated ? "YES" : "NO"}\n\n`;
+
+    output += "=====================================================\n";
+    output += "Conversation\n";
+    output += "=====================================================\n\n";
+
+    conversation.forEach(msg => {
+
+        output += `[${msg.from === "user" ? "Student" : "CTRL4"}]\n`;
+
+        output += `${msg.text}\n`;
+
+        if (msg.time)
+            output += `(${msg.time})\n`;
+
+        output += "\n-----------------------------------------------------\n\n";
+
+    });
+
+    const blob = new Blob([output], { type: "text/plain" });
+
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+
+    a.href = url;
+
+    const filename =
+    `CTRL4_Conversation_${now.getFullYear()}-${
+    String(now.getMonth() + 1).padStart(2, "0")}-${
+    String(now.getDate()).padStart(2, "0")}_${
+    String(now.getHours()).padStart(2, "0")}-${
+    String(now.getMinutes()).padStart(2, "0")}.txt`;
+
+    a.download = filename;
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
+
+}
+const exportBtn = document.getElementById("export-chat-btn");
+
+if (exportBtn) {
+    exportBtn.addEventListener("click", exportConversation);
 }
 
 // Listen for storage events so staff messages and escalation events propagate across tabs

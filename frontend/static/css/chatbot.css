@@ -18,7 +18,7 @@
 
 /* ── HEADER ── */
 .header {
-  background: linear-gradient(135deg, var(--maroon-dark) 0%, var(--maroon) 60%, var(--maroon-light) 100%);
+  background: linear-gradient(135deg, var(--dark-orange) 0%, var(--orange) 60%, var(--light-orange) 100%);
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
@@ -66,7 +66,7 @@
   font-family: 'Playfair Display', serif;
   font-size: 18px;
   font-weight: 700;
-  color: var(--maroon);
+  color: var(--orange);
   box-shadow: 0 0 0 3px rgba(201,168,76,0.25);
 }
 .header-text { flex: 1; min-width: 0; }
@@ -155,7 +155,7 @@
 .avatar {
   width: 32px; height: 32px;
   border-radius: 50%;
-  background: var(--maroon);
+  background: var(--orange);
   border: 1.5px solid var(--gold);
   display: flex;
   align-items: center;
@@ -185,7 +185,7 @@
   box-shadow: var(--shadow-sm);
 }
 .msg-row.user .bubble {
-  background: var(--maroon);
+  background: var(--orange);
   color: var(--white);
   border-bottom-right-radius: 4px;
   box-shadow: var(--shadow-sm);
@@ -348,7 +348,7 @@
 
 .confirmation-card h3 {
   font-size: 1.1rem;
-  color: var(--maroon);
+  color: var(--orange);
   margin-bottom: 8px;
 }
 
@@ -374,7 +374,7 @@
 }
 
 .confirmation-actions .confirm-btn {
-  background: var(--maroon);
+  background: var(--orange);
   color: var(--white);
 }
 
@@ -385,7 +385,7 @@
 .qr-btn {
   background: var(--white);
   border: 1.5px solid var(--gold);
-  color: var(--maroon);
+  color: var(--orange);
   border-radius: 99px;
   padding: 6px 14px;
   font-size: 12px;
@@ -395,7 +395,7 @@
   white-space: nowrap;
   transition: background 0.15s, color 0.15s;
 }
-.qr-btn:hover { background: var(--maroon); color: var(--white); border-color: var(--maroon); }
+.qr-btn:hover { background: var(--orange); color: var(--white); border-color: var(--orange); }
 
 /* ── INPUT BAR ── */
 .input-bar {
@@ -417,7 +417,7 @@
   padding: 9px 14px;
   transition: border-color 0.2s;
 }
-.input-wrap:focus-within { border-color: var(--maroon); }
+.input-wrap:focus-within { border-color: var(--orange); }
 #msg-input,
 #admin-msg-input {
   flex: 1;
@@ -435,7 +435,7 @@
 .send-btn {
   width: 42px; height: 42px;
   border-radius: 50%;
-  background: var(--maroon);
+  background: var(--orange);
   border: none;
   cursor: pointer;
   display: flex;
@@ -445,7 +445,7 @@
   transition: background 0.2s, transform 0.1s;
   box-shadow: 0 2px 8px rgba(123,17,19,0.3);
 }
-.send-btn:hover  { background: var(--maroon-dark); }
+.send-btn:hover  { background: var(--dark-orange); }
 .send-btn:active { transform: scale(0.93); }
 .send-btn svg    { width: 18px; height: 18px; }
 

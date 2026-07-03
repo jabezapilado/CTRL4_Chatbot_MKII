@@ -7,8 +7,11 @@ from dotenv import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = BASE_DIR.parent
+AI_ENGINE_DIR = PROJECT_ROOT / "ai_engine"
+DATA_DIR = BASE_DIR / "data"
 load_dotenv(BASE_DIR / ".env")
-load_dotenv(BASE_DIR.parent / ".env")
+load_dotenv(PROJECT_ROOT / ".env")
 
 
 class Config:
@@ -38,8 +41,8 @@ class Config:
         self.SEED_ADMIN_PASSWORD = os.getenv("CHATBOT_SEED_ADMIN_PASSWORD", "")
 
         # Multilingual RAG configuration
-        self.RAG_DOCS_DIR = os.getenv("CHATBOT_RAG_DOCS_DIR", str(BASE_DIR / "knowledge_base"))
-        self.RAG_INDEX_DIR = os.getenv("CHATBOT_RAG_INDEX_DIR", str(BASE_DIR / "data" / "rag_index"))
+        self.RAG_DOCS_DIR = os.getenv("CHATBOT_RAG_DOCS_DIR", str(AI_ENGINE_DIR / "knowledge_base"))
+        self.RAG_INDEX_DIR = os.getenv("CHATBOT_RAG_INDEX_DIR", str(DATA_DIR / "rag_index"))
         self.RAG_EMBEDDING_MODEL = os.getenv("CHATBOT_RAG_EMBEDDING_MODEL", "intfloat/multilingual-e5-large")
         self.RAG_TOP_K = int(os.getenv("CHATBOT_RAG_TOP_K", "5"))
         self.RAG_MIN_SCORE = float(os.getenv("CHATBOT_RAG_MIN_SCORE", "0.30"))
@@ -48,6 +51,47 @@ class Config:
         self.RAG_AUTO_BUILD_ON_START = os.getenv("CHATBOT_RAG_AUTO_BUILD_ON_START", "true").lower() == "true"
         self.RAG_GENERATOR_MODEL = os.getenv("CHATBOT_RAG_GENERATOR_MODEL", "")
 
+        # Gemini configuration
+        self.GEMINI_API_KEY = os.getenv(
+            "CHATBOT_GEMINI_API_KEY",
+            ""
+        )
+
+        self.GEMINI_MODEL = os.getenv(
+            "CHATBOT_GEMINI_MODEL",
+            "gemini-2.5-flash"
+        )
+
+        self.GEMINI_TEMPERATURE = float(
+            os.getenv(
+                "CHATBOT_GEMINI_TEMPERATURE",
+                "0.7"
+            )
+        )
+
+        self.GEMINI_MAX_OUTPUT_TOKENS = int(
+            os.getenv(
+                "CHATBOT_GEMINI_MAX_OUTPUT_TOKENS",
+                "1024"
+            )
+        )
+        
+        # LLM configuration
+        self.LLM_PROVIDER = os.getenv(
+            "CHATBOT_LLM_PROVIDER",
+            "ollama"
+        )
+
+        self.OLLAMA_URL = os.getenv(
+            "CHATBOT_OLLAMA_URL",
+            "http://localhost:11434/api/generate"
+        )
+
+        self.OLLAMA_MODEL = os.getenv(
+            "CHATBOT_OLLAMA_MODEL",
+            "qwen2.5:7b"
+        )
+        
         # Emotion-based escalation configuration
         self.EMOTION_ESCALATION_ENABLED = os.getenv("CHATBOT_EMOTION_ESCALATION_ENABLED", "true").lower() == "true"
         self.EMOTION_ESCALATION_THRESHOLD = float(os.getenv("CHATBOT_EMOTION_ESCALATION_THRESHOLD", "0.55"))

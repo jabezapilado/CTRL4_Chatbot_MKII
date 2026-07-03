@@ -9,23 +9,23 @@
   padding: 0;
 }
 :root {
-  --maroon:        #7B0D1E;
-  --maroon-dark:   #5A0A15;
-  --maroon-light:  #9E1228;
-  --gold:          #C9A84C;
-  --gold-light:    #E8C96D;
-  --cream:         #F5F0E8;
-  --cream-light:   #FAF7F2;
+  --orange:        #E67E22;
+  --dark-orange:   #D35400;
+  --light-orange:  #F39C12;
+  --gold:          #F4D03F;
+  --gold-light:    #F7DC6F;
+  --cream:         #FDF6E3;
+  --cream-light:   #FCF3CF;
   --off-white:     #F9F8F6;
   --white:         #FFFFFF;
   --text-primary:  #1A1A1A;
   --text-secondary:#555555;
   --text-muted:    #888888;
   --border:        #E0D8CC;
-  --border-focus:  #7B0D1E;
+  --border-focus:  #D35400;
   --input-bg:      #FFFFFF;
   --shadow-card:   0 8px 40px rgba(0,0,0,0.10);
-  --shadow-input:  0 2px 8px rgba(123,13,30,0.08);
+  --shadow-input:  0 2px 8px rgba(211,84,0,0.08);
   --radius-card:   20px;
   --radius-input:  10px;
   --radius-btn:    30px;
@@ -51,7 +51,7 @@ html, body {
   position: relative;
   flex: 0 0 380px;
   width: 380px;
-  background: linear-gradient(160deg, var(--maroon-dark) 0%, var(--maroon) 60%, var(--maroon-light) 100%);
+  background: linear-gradient(160deg, var(--dark-orange) 0%, var(--orange) 60%, var(--light-orange) 100%);
   display: flex;
   flex-direction: column;
   padding: 40px 36px;
@@ -226,7 +226,7 @@ html, body {
 .form-label {
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--maroon);
+  color: var(--orange);
   letter-spacing: 0.01em;
 }
 /* ---------- Inputs ---------- */
@@ -307,7 +307,7 @@ html, body {
   line-height: 1.55;
 }
 .reminder-banner strong {
-  color: var(--maroon);
+  color: var(--orange);
 }
 /* ---------- Buttons ---------- */
 .form-actions {
@@ -329,13 +329,13 @@ html, body {
   letter-spacing: 0.02em;
 }
 .btn-primary {
-  background: var(--maroon);
+  background: var(--orange);
   color: var(--white);
-  border-color: var(--maroon);
+  border-color: var(--orange);
 }
 .btn-primary:hover {
-  background: var(--maroon-dark);
-  border-color: var(--maroon-dark);
+  background: var(--dark-orange);
+  border-color: var(--dark-orange);
   transform: translateY(-1px);
   box-shadow: 0 4px 16px rgba(123,13,30,0.3);
 }
@@ -349,8 +349,8 @@ html, body {
   border-color: var(--border);
 }
 .btn-secondary:hover {
-  border-color: var(--maroon);
-  color: var(--maroon);
+  border-color: var(--orange);
+  color: var(--orange);
   transform: translateY(-1px);
 }
 .btn-secondary:active {
@@ -414,7 +414,7 @@ html, body {
 .modal-icon {
   width: 64px;
   height: 64px;
-  background: linear-gradient(135deg, var(--maroon), var(--maroon-light));
+  background: linear-gradient(135deg, var(--orange), var(--light-orange));
   color: white;
   border-radius: 50%;
   display: flex;
@@ -445,7 +445,7 @@ html, body {
   margin-bottom: 24px !important;
 }
 .modal-ref strong {
-  color: var(--maroon);
+  color: var(--orange);
   font-weight: 700;
 }
 /* =========================================================

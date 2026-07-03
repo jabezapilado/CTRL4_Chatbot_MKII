@@ -13,21 +13,21 @@
   padding: 0;
 }
 
-/* ── HAU BRAND VARIABLES ── */
+/* ── SOC ORANGE THEME VARIABLES ── */
 :root {
-  --maroon:        #7B1113;
-  --maroon-dark:   #5A0C0E;
-  --maroon-light:  #9E1B1D;
-  --gold:          #C9A84C;
-  --gold-light:    #E8C97A;
-  --gold-pale:     #FDF6E3;
+  --orange:        #E67E22;
+  --dark-orange:   #D35400;
+  --light-orange:  #F39C12;
+  --gold:          #F4D03F;
+  --gold-light:    #F7DC6F;
+  --gold-pale:     #FCF3CF;
   --white:         #FFFFFF;
   --gray-50:       #F9F9F9;
-  --gray-100:      #F0EDED;
-  --gray-200:      #DDD8D8;
-  --gray-400:      #9E9393;
-  --gray-700:      #4A4040;
-  --gray-900:      #1E1818;
+  --gray-100:      #F0EFEA;
+  --gray-200:      #E6E0D6;
+  --gray-400:      #A89B8D;
+  --gray-700:      #5A4D42;
+  --gray-900:      #2C2A28;
 
   --success-bg:    #F0FDF4;
   --success-text:  #166534;
@@ -44,7 +44,7 @@
   --radius-lg:     16px;
   --radius-md:     10px;
   --radius-sm:     6px;
-  --shadow-md:     0 4px 24px rgba(123,17,19,0.10);
+  --shadow-md:     0 4px 24px rgba(230,126,34,0.15);
   --shadow-sm:     0 2px 8px rgba(0,0,0,0.07);
 }
 
@@ -59,7 +59,7 @@ html, body {
 a { color: inherit; text-decoration: none; }
 
 /* ── UTILITY CLASSES ── */
-.text-maroon { color: var(--maroon); }
+.text-maroon { color: var(--orange); }
 .text-gray   { color: var(--gray-400); }
 .font-serif  { font-family: 'Playfair Display', serif; }
 
@@ -87,16 +87,16 @@ a { color: inherit; text-decoration: none; }
   transition: background 0.15s, transform 0.1s;
 }
 .btn-primary {
-  background: var(--maroon);
+  background: var(--orange);
   color: var(--white);
 }
-.btn-primary:hover { background: var(--maroon-dark); }
+.btn-primary:hover { background: var(--dark-orange); }
 .btn-outline {
   background: var(--white);
-  color: var(--maroon);
+  color: var(--orange);
   border: 1.5px solid var(--gold);
 }
-.btn-outline:hover { background: var(--maroon); color: var(--white); }
+.btn-outline:hover { background: var(--orange); color: var(--white); }
 
 /* ── SCROLLBAR ── */
 .scrollable::-webkit-scrollbar { width: 4px; }

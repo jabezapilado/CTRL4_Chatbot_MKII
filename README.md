@@ -1,145 +1,477 @@
-# Development of an AI-Powered Chatbot for Inquiry Management Using NLP-Based Negative Emotion Detection
+# CTRL4 Chatbot MK II
 
-## Overview
+> Development of an AI-Powered Guidance Chatbot for Inquiry Management Using NLP-Based Negative Emotion Detection
 
-- Web-based guidance chatbot for student support and inquiry handling.
-- Flask backend serves chat, authentication, dashboard APIs, and MySQL persistence.
-- Current AI stack is multilingual RAG (retrieval-augmented generation) with strict grounding to approved guidance content.
-- Role-based routing is active: `student` to chatbot, `staff` and `admin` to dashboard.
-- The final project version is intended for deployment as a website with a cloud database.
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![Flask](https://img.shields.io/badge/Flask-3.x-black)
+![Gemini](https://img.shields.io/badge/Gemini-2.5--Flash-orange)
+![Ollama](https://img.shields.io/badge/Ollama-Supported-green)
+![RAG](https://img.shields.io/badge/RAG-Enabled-success)
+![Version](https://img.shields.io/badge/Version-MK%20II%20Stable-success)
 
-## Current AI Architecture
+---
 
-- Active AI runtime: `backend/server/service.py` (`MultilingualRAGService`).
-- Active knowledge source folder: `backend/knowledge_base/`.
-- Active index build script: `backend/scripts/ingest_guidance_docs.py`.
-- Chat endpoint: `POST /chat`.
-- NLP-based negative emotion detection is active and can trigger immediate counselor escalation.
-- Safety behavior includes crisis escalation and diagnosis refusal rules.
+# Overview
 
-## Legacy AI Archive
+CTRL4 Chatbot MK II is the second-generation AI-powered guidance chatbot developed for the **Holy Angel University – School of Computing**.
 
-The `ai/` folder is preserved as a **legacy archive** from the earlier prototype.
+The system provides students with 24/7 guidance support by combining modern Artificial Intelligence technologies including Retrieval-Augmented Generation (RAG), multilingual Natural Language Processing (NLP), emotion-aware conversations, and official Guidance Office knowledge.
 
-- It is **not** part of the current production runtime.
-- Do not add new active chatbot logic there.
-- Use it only for historical reference, comparison, or thesis documentation.
+Unlike the first prototype (MK I), CTRL4 Chatbot MK II introduces a modular AI architecture that separates language understanding, emotion detection, safety validation, prompt engineering, knowledge retrieval, and LLM providers into independent services for improved scalability, maintainability, and future expansion.
 
-## Tech Stack
+---
+
+# Project Status
+
+**Current Version:** MK II Stable (v2.0.0)
+
+CTRL4 Chatbot MK II is considered feature complete.
+
+Major improvements over MK I include:
+
+- Modular AI architecture
+- Retrieval-Augmented Generation (RAG)
+- Emotion-aware prompting
+- Multilingual support
+- Safety validation
+- Provider abstraction
+- Gemini integration
+- Ollama integration
+- Performance monitoring
+- School of Computing branding
+- Redesigned user interface
+
+---
+
+# Features
+
+## Artificial Intelligence
+
+- AI-powered Guidance Assistant
+- Retrieval-Augmented Generation (RAG)
+- Official Guidance Office Knowledge Base
+- Emotion Detection
+- Language Detection
+- Emotion-aware Prompt Engineering
+- Crisis Detection & Safety Validation
+- Multilingual Support (English, Filipino, Taglish)
+- Conversation Context Support
+
+## LLM Providers
+
+- Google Gemini API
+- Ollama Local LLM
+- Provider Abstraction Layer
+- Easily Extendable Provider Architecture
+
+## Student Features
+
+- AI Chat Support
+- Appointment Booking
+- Guidance Office Information
+- Conversation Export
+- Responsive Interface
+
+## Staff Features
+
+- Admin Dashboard
+- Student Concern Monitoring
+- Chat Takeover Mode
+- Appointment Management
+
+---
+
+# What's New in MK II
+
+## Artificial Intelligence
+
+Compared to MK I, CTRL4 Chatbot MK II introduces:
+
+- Modular service-oriented AI architecture
+- LLM Provider abstraction
+- Retrieval-Augmented Generation (RAG)
+- Emotion-aware prompting
+- Crisis detection
+- Performance monitoring
+- Local AI support using Ollama
+- Cloud AI support using Gemini
+
+## User Interface
+
+### MK I
+
+- Holy Angel University branding
+- Red theme
+- Initial chatbot interface
+
+### MK II
+
+- School of Computing branding
+- Orange theme
+- Redesigned chatbot interface
+- Improved user experience
+- Cleaner layouts
+
+---
+
+# AI Architecture
+
+```
+                    Student
+                        │
+                        ▼
+                 Frontend (HTML/CSS/JS)
+                        │
+                        ▼
+                  Flask Backend API
+                        │
+                        ▼
+                    AIService
+                        │
+        ┌───────────────┼───────────────┐
+        │               │               │
+        ▼               ▼               ▼
+ SafetyService   LanguageService   EmotionService
+        │
+        ▼
+     RAGService
+        │
+        ▼
+   PromptBuilder
+        │
+        ▼
+     LLMService
+        │
+   ┌────┴────┐
+   ▼         ▼
+Gemini   Ollama
+Provider Provider
+```
+
+---
+
+# Technology Stack
+
+## Backend
 
 - Python 3.10+
-- Flask, Flask-CORS
-- MySQL / MariaDB (XAMPP)
-- sentence-transformers, faiss-cpu, transformers (optional generator), langdetect
-- pypdf and python-docx for document ingestion
-- HTML, CSS, JavaScript frontend templates
+- Flask
+- Flask-CORS
 
-## Quick Start
+## Artificial Intelligence
 
-### First-time setup
+- Google Gemini API
+- Ollama
+- Sentence Transformers
+- FAISS
+- DistilBERT
+- LangDetect
 
-1. Open XAMPP and start MySQL.
-2. Go to the [backend](backend) folder.
-3. Create the virtual environment and install the dependencies.
-4. Copy `.env.example` to `.env`.
-5. Initialize the database and seed the default accounts.
-6. Build the RAG index from the official guidance files.
-7. Start the Flask app.
+## Database
+
+- MySQL / MariaDB
+
+## Frontend
+
+- HTML5
+- CSS3
+- JavaScript
+
+---
+
+# Installation
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/<your-username>/CTRL4_Chatbot.git
+cd CTRL4_Chatbot
+```
+
+---
+
+## 2. Navigate to the Backend
 
 ```bash
 cd backend
-python3 -m venv .venv
+```
+
+---
+
+## 3. Create a Virtual Environment
+
+```bash
+python -m venv .venv
+```
+
+---
+
+## 4. Activate the Virtual Environment
+
+### Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+### macOS / Linux
+
+```bash
 source .venv/bin/activate
+```
+
+---
+
+## 5. Install Dependencies
+
+```bash
 pip install -r requirements.txt
-cp .env.example .env
-python scripts/setup_database.py
-python scripts/ingest_guidance_docs.py
-python app.py
 ```
 
-### Daily run
+---
 
-If the backend is already set up, you only need:
+## 6. Configure Environment Variables
+
+Create:
+
+```text
+backend/.env
+```
+
+Example:
+
+```env
+CHATBOT_LLM_PROVIDER=gemini
+
+CHATBOT_GEMINI_API_KEY=YOUR_API_KEY
+CHATBOT_GEMINI_MODEL=gemini-2.5-flash
+
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=qwen2.5:7b
+```
+
+---
+
+## 7. Initialize the Database
+
+Run the database setup script:
 
 ```bash
-cd backend
-source .venv/bin/activate
+python scripts/setup_database.py
+```
+
+This command:
+
+- Creates the application database.
+- Creates the required database tables.
+- Seeds the default user accounts.
+
+### Default Development Accounts
+
+| Role    |    Default Email     | Default Password |
+|---------|----------------------|------------------|
+| Student | `student@hau.edu.ph` |   `student123`   |
+| Staff   | `staff@hau.edu.ph`   |   `staff123`     |
+| Admin   | `admin@hau.edu.ph`   |   `admin123`     |
+
+These credentials are intended for local development only. Update or replace them before deploying the application in any shared or production environment.
+
+---
+
+## 8. Build the Knowledge Base
+
+```bash
+python scripts/ingest_guidance_docs.py
+```
+
+This command generates the FAISS vector index used by the chatbot's Retrieval-Augmented Generation (RAG) pipeline.
+
+---
+
+## 9. Start the Application
+
+```bash
 python app.py
 ```
 
-### Helpful pages
+The application will be available at:
 
-- `http://localhost:5000/` or `http://localhost:5000/login`
-- `http://localhost:5000/chatbot`
-- `http://localhost:5000/dashboard`
+```text
+http://127.0.0.1:5000
+```
 
-## Key Endpoints
+---
 
-- `GET /health`
-- `POST /chat`
-- `POST /auth/login`
-- `GET /api/inquiries`
-- `GET /api/escalations`
-- `GET /api/appointments`
-- `GET /api/accounts`
-- `GET /api/settings`
-
-## Project Structure
+# Project Structure
 
 ```text
 CTRL4_Chatbot/
-├─ README.md
-├─ frontend/
-│  ├─ README.md
-│  ├─ templates/
-│  │  ├─ appointment.html
-│  │  ├─ chatbot.html
-│  │  ├─ chatbot_admin.html
-│  │  ├─ dashboard.html
-│  │  └─ login.html
-│  └─ static/
-│     ├─ css/
-│     ├─ img/
-│     └─ js/
-├─ backend/
-│  ├─ README.md
-│  ├─ app.py
-│  ├─ requirements.txt
-│  ├─ setup.sh
-│  ├─ .env.example
-│  ├─ knowledge_base/
-│  │  └─ hau_guidance_counseling_official.md
-│  ├─ data/rag_index/
-│  │  ├─ knowledge.faiss
-│  │  └─ metadata.json
-│  ├─ scripts/
-│  │  ├─ ingest_guidance_docs.py
-│  │  └─ setup_database.py
-│  ├─ sql/
-│  │  └─ schema.sql
-│  └─ server/
-│     ├─ __init__.py
-│     ├─ auth.py
-│     ├─ config.py
-│     ├─ db.py
-│     ├─ routes.py
-│     └─ service.py
-└─ ai/
-   ├─ README.md (legacy archive note)
-   ├─ chatbot_ai.py
-   ├─ dataset.csv
-   ├─ english_stopwords.txt
-   ├─ goemotions_1.csv
-   └─ tagalog_stopwords.txt
+│
+├── ai_engine/                          # AI model development and training
+│   ├── configs/
+│   ├── core/
+│   │   ├── models/
+│   │   ├── preprocessors/
+│   │   ├── schemas/
+│   │   ├── tokenizers/
+│   │   ├── training/
+│   │   └── utilities/
+│   │
+│   ├── data/
+│   │   ├── external/
+│   │   ├── processed/
+│   │   └── merged/
+│   │
+│   ├── knowledge_base/
+│   └── models/
+│
+├── backend/                            # Flask backend and AI services
+│   ├── data/
+│   │   └── rag_index/
+│   │
+│   ├── scripts/
+│   │   ├── ingest_guidance_docs.py
+│   │   └── setup_database.py
+│   │
+│   ├── server/
+│   │   ├── llm_providers/
+│   │   │   ├── base_provider.py
+│   │   │   ├── gemini_provider.py
+│   │   │   └── ollama_provider.py
+│   │   │
+│   │   ├── services/
+│   │   │   ├── ai_service.py
+│   │   │   ├── emotion_service.py
+│   │   │   ├── language_service.py
+│   │   │   ├── llm_service.py
+│   │   │   ├── prompt_builder.py
+│   │   │   ├── rag_service.py
+│   │   │   └── safety_service.py
+│   │   │
+│   │   ├── auth.py
+│   │   ├── config.py
+│   │   ├── db.py
+│   │   └── routes.py
+│   │
+│   ├── sql/
+│   ├── app.py
+│   ├── requirements.txt
+│   └── setup.sh
+│
+├── frontend/                           # Web interface
+│   ├── static/
+│   │   ├── css/
+│   │   ├── img/
+│   │   └── js/
+│   │
+│   └── templates/
+│
+├── docs/                               # Project documentation
+│   ├── models/
+│   │   ├── english_model/
+│   │   └── filipino_model/
+│   │
+│   ├── 01_project_architecture.md
+│   ├── 02_dataset_documentation.md
+│   ├── 03_preprocessing_pipeline.md
+│   ├── 04_model_architecture.md
+│   ├── 05_api_integration.md
+│   ├── 06_deployment_guide.md
+│   ├── 07_future_work.md
+│   ├── 08_design_decisions.md
+│   └── CTRL4_BIBLE.md
+│
+├── CHANGELOG.md
+├── LICENSE
+├── README.md
+├── requirements.txt
+└── .gitignore
 ```
 
-## Contributors
+---
 
-- Apilado, Jabez Timothy E. - Back-end Lead, Integration, and QA
-- Quilantang, Grant Mihkael D. - Front-end Lead
-- Lanix, Iligan - AI Model Lead
-- Wylengco, Teyshaun Zell - UI/UX Lead
+# Screenshots
 
-## License
+*(To be added before final release.)*
 
-This project is released for educational use. Apply additional licensing as needed before redistribution.
+- Login Page
+- Student Chat Interface
+- Appointment Page
+- Staff Dashboard
+- Admin Chat Takeover
+- AI Performance Logger
+
+---
+
+# Version History
+
+## MK I
+
+- Initial chatbot prototype
+- Gemini-only implementation
+- Holy Angel University branding
+- Red theme
+- Basic chatbot workflow
+
+## MK II
+
+- Complete AI architecture redesign
+- Modular service-oriented architecture
+- Retrieval-Augmented Generation (RAG)
+- Emotion Detection
+- Language Detection
+- Safety Validation
+- Prompt Engineering
+- Gemini Provider
+- Ollama Provider
+- Performance Monitoring
+- School of Computing branding
+- Orange UI redesign
+- Admin Dashboard
+- Chat Takeover
+- Conversation Export
+
+---
+
+# Future Work (MK III)
+
+Planned enhancements include:
+
+- Long-term conversation memory
+- Counselor analytics dashboard
+- Emotional trend visualization
+- AI-generated counselor summaries
+- Intent classification
+- Streaming AI responses
+- Real-time chat using WebSockets
+- Migration to the Google Gen AI SDK
+
+---
+
+# Contributors
+
+- **Apilado, Jabez Timothy E.**
+  - Backend Development
+  - Artificial Intelligence Integration
+  - System Architecture
+  - Database Development
+  - Quality Assurance
+
+- **Quilantang, Grant Mihkael D.**
+  - Frontend Development
+
+- **Lanix, Iligan**
+  - AI Model Development
+
+- **Wylengco, Teyshaun Zell**
+  - UI/UX Design
+
+---
+
+# License
+
+This project is licensed under the **CTRL4 Academic Use License**.
+
+It is intended for academic, educational, and research purposes only. Commercial use, redistribution, or modification for commercial purposes requires permission from the authors.
+
+See the [LICENSE](LICENSE) file for complete terms.

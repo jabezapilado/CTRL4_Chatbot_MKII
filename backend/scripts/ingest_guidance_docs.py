@@ -5,25 +5,38 @@ import sys
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
 BACKEND_ROOT = PROJECT_ROOT / "backend"
 
 if str(BACKEND_ROOT) not in sys.path:
     sys.path.insert(0, str(BACKEND_ROOT))
 
-from server.service import get_chatbot_service  # noqa: E402
+
+from server.services import rag_service  # noqa: E402
 
 
 def main() -> int:
-    service = get_chatbot_service()
 
-    if service.initialization_error:
-        print(service.initialization_error)
+    if rag_service.initialization_error:
+
+        print(rag_service.initialization_error)
+
         return 1
 
-    count = service.build_index()
-    print(f"Indexed chunks: {count}")
-    print(f"Docs directory: {service.docs_dir}")
-    print(f"Index directory: {service.index_dir}")
+    count = rag_service.build_index()
+
+    print("=" * 60)
+    print("CTRL4 RAG INDEX BUILDER")
+    print("=" * 60)
+
+    print(f"Indexed chunks : {count}")
+
+    print(f"Documents      : {rag_service.docs_dir}")
+
+    print(f"Index          : {rag_service.index_dir}")
+
+    print("=" * 60)
+
     return 0
 
 

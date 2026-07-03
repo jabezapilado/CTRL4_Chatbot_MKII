@@ -61,7 +61,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: linear-gradient(160deg, var(--maroon-dark) 0%, var(--maroon) 58%, var(--maroon-light) 100%);
+  background: linear-gradient(160deg, var(--dark-orange) 0%, var(--orange) 58%, var(--light-orange) 100%);
   color: var(--white);
 }
 
@@ -196,7 +196,7 @@ body {
   height: 24px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: var(--maroon);
+  background: var(--orange);
   color: var(--white);
   display: inline-flex;
   align-items: center;
@@ -250,7 +250,7 @@ body {
 
 .role-btn.active {
   background: var(--white);
-  color: var(--maroon);
+  color: var(--orange);
   box-shadow: 0 10px 24px rgba(123, 17, 19, 0.12);
 }
 
