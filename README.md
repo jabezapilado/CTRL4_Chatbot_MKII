@@ -179,13 +179,35 @@ Provider Provider
 
 ---
 
+# Requirements
+
+Before running the project, ensure the following software is installed.
+
+## Software Requirements
+
+- Python 3.10 or later
+- MySQL 8.0 or MariaDB
+- Git
+- pip (Python Package Manager)
+
+## Optional
+
+To use the local AI provider, install:
+
+- Ollama
+- Qwen2.5:7B model
+
+Google Gemini users only need a valid Gemini API key.
+
+---
+
 # Installation
 
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/CTRL4_Chatbot.git
-cd CTRL4_Chatbot
+git clone https://github.com/jabezapilado/CTRL4_Chatbot_MKII.git
+cd CTRL4_Chatbot_MKII
 ```
 
 ---
@@ -230,7 +252,51 @@ pip install -r requirements.txt
 
 ---
 
-## 6. Configure Environment Variables
+## 6. Install Ollama (Optional - Local LLM)
+
+CTRL4 Chatbot MK II supports both **Google Gemini** and **Ollama** as Large Language Model (LLM) providers.
+
+If you intend to use **Ollama**, install it before running the chatbot.
+
+### Install Ollama
+
+Download Ollama from:
+
+```text
+https://ollama.com/download
+```
+
+### Verify the Installation
+
+```bash
+ollama --version
+```
+
+### Download the Required Model
+
+```bash
+ollama pull qwen2.5:7b
+```
+
+### Start the Ollama Server
+
+```bash
+ollama serve
+```
+
+The Ollama API will be available at:
+
+```text
+http://localhost:11434
+```
+
+> **Note**
+>
+> If you plan to use **Google Gemini**, this step can be skipped.
+
+---
+
+## 7. Configure Environment Variables
 
 Create:
 
@@ -244,15 +310,15 @@ Example:
 CHATBOT_LLM_PROVIDER=gemini
 
 CHATBOT_GEMINI_API_KEY=YOUR_API_KEY
-CHATBOT_GEMINI_MODEL=gemini-2.5-flash
+CHATBOT_GEMINI_MODEL=gemini-2.5-flash-lite
 
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL=qwen2.5:7b
+CHATBOT_OLLAMA_URL=http://localhost:11434/api/generate
+CHATBOT_OLLAMA_MODEL=qwen2.5:7b
 ```
 
 ---
 
-## 7. Initialize the Database
+## 8. Initialize the Database
 
 Run the database setup script:
 
@@ -278,7 +344,7 @@ These credentials are intended for local development only. Update or replace the
 
 ---
 
-## 8. Build the Knowledge Base
+## 9. Build the Knowledge Base
 
 ```bash
 python scripts/ingest_guidance_docs.py
@@ -288,7 +354,7 @@ This command generates the FAISS vector index used by the chatbot's Retrieval-Au
 
 ---
 
-## 9. Start the Application
+## 10. Start the Application
 
 ```bash
 python app.py
@@ -299,6 +365,32 @@ The application will be available at:
 ```text
 http://127.0.0.1:5000
 ```
+
+---
+
+## Switching Between LLM Providers
+
+CTRL4 Chatbot MK II supports both **Google Gemini** and **Ollama**.
+
+To change the active Large Language Model (LLM), edit the following variable in `backend/.env`.
+
+### Google Gemini
+
+```env
+CHATBOT_LLM_PROVIDER=gemini
+```
+
+### Ollama
+
+```env
+CHATBOT_LLM_PROVIDER=ollama
+```
+
+Restart the backend application after changing the provider.
+
+> **Note**
+>
+> Google Gemini requires a valid API key, while Ollama requires the local Ollama server to be running with the configured model downloaded.
 
 ---
 
