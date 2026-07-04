@@ -1,5 +1,9 @@
 # Assumptions
 
+> **Note**
+>
+> The cost estimates presented in this document are based on the official Google Gemini API pricing available at the time of writing and are intended for budgeting and deployment planning purposes only. Actual costs may vary depending on changes to API pricing, prompt length, response length, Retrieval-Augmented Generation (RAG) context size, conversation volume, and overall system usage. Always refer to the latest pricing published by the AI provider before estimating operational expenses.
+
 | Parameter                                 | Value    |
 | ----------------------------------------- | -------: |
 | Deployment Duration                       | 4 Months |
@@ -86,3 +90,17 @@
 | Gemini 2.5 Flash       | Best response quality                |
 | Gemini 2.5 Flash-Lite  | Lowest cloud operating cost          |
 | Ollama (Qwen2.5:7B)    | Fully local deployment (no API cost) |
+
+---
+
+# CTRL4 Cost Optimization
+
+CTRL4 Chatbot employs a modular AI architecture that performs several Natural Language Processing (NLP) tasks locally before sending requests to the Large Language Model (LLM). These locally executed components include:
+
+- Language Detection
+- Emotion Detection
+- Safety Validation
+- Retrieval-Augmented Generation (RAG)
+- Prompt Engineering
+
+Because only the final, context-enriched prompt is sent to the LLM, token consumption is significantly reduced compared to systems that rely entirely on cloud-based language models. This architecture helps minimize operational costs while maintaining high-quality, context-aware responses.
